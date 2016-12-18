@@ -23,7 +23,6 @@ public class CQZCameraManager:NSObject {
         get {
             return imagePickerController.allowsEditing
         }
-        
         set {
             imagePickerController.allowsEditing = newValue
         }
@@ -101,8 +100,14 @@ public class CQZCameraManager:NSObject {
 }
 
 extension CQZCameraManager:UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    public func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        executeDidFinishPickingImage(image)
+    public func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            executeDidFinishPickingImage(image)
+        }else{
+            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                executeDidFinishPickingImage(image)
+            }
+        }
     }
     
     public func imagePickerControllerDidCancel(picker: UIImagePickerController) {
