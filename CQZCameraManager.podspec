@@ -8,5 +8,5 @@ Pod::Spec.new do |s|
   	s.ios.deployment_target 	= '8.0'
   	s.requires_arc 			= true
 	s.frameworks             	= "Foundation"
-	s.source_files			= 'project/CQZCameraManager/*.swift'
+	s.source_files			= 'project/CameraManager/*.swift'
 end
