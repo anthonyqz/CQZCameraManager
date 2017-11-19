@@ -64,7 +64,7 @@ open class CQZCameraManager:NSObject {
         
         imagePickerController.allowsEditing = allowsEditing
         if showCameraFrontal {
-            imagePickerController.cameraDevice = UIImagePickerControllerCameraDevice.front
+//            imagePickerController.cameraDevice = UIImagePickerControllerSourceType.camera
         }
         didFinishPickingImage = completion
         
