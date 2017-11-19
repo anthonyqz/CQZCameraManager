@@ -53,9 +53,19 @@ open class CQZCameraManager:NSObject {
         viewController.present(imagePickerController, animated: true, completion: nil)
     }
     
-    open func showActionSheetSelectImage(inViewController viewController:UIViewController, allowsEditing:Bool, titleAlert:String?, titleSourceCamera:String?, titleSourceLibrary:String?, completion: @escaping (_ image:UIImage?) -> (), moreActions actions:[UIAlertAction]?) {
+    open func showActionSheetSelectImage(inViewController viewController:UIViewController
+        , allowsEditing:Bool
+        , showCameraFrontal:Bool
+        , titleAlert:String?
+        , titleSourceCamera:String?
+        , titleSourceLibrary:String?
+        , completion: @escaping (_ image:UIImage?) -> ()
+        , moreActions actions:[UIAlertAction]?) {
         
         imagePickerController.allowsEditing = allowsEditing
+        if showCameraFrontal {
+            imagePickerController.cameraDevice = .front
+        }
         didFinishPickingImage = completion
         
         let alert = UIAlertController(title: titleAlert, message: nil, preferredStyle:UIAlertControllerStyle.actionSheet)

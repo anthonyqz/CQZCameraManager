@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     @IBAction func showActionSheetCamera(sender: AnyObject) {
         CQZCameraManager.shared.showActionSheetSelectImage(inViewController: self
             , allowsEditing: false
+            , showCameraFrontal: true
             , titleAlert: nil
             , titleSourceCamera: "Take Picture"
             , titleSourceLibrary: "Select Picture"
@@ -33,7 +34,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func changeAllowsEditing(sender: UISwitch) {
-        CQZCameraManager.shared.allowsEditing = sender.on
+        CQZCameraManager.shared.allowsEditing = sender.isOn
     }
 }
 
