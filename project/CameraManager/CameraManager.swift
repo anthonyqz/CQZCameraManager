@@ -9,17 +9,17 @@
 import Foundation
 import UIKit
 
-open class CQZCameraManager:NSObject {
+public class CQZCameraManager:NSObject {
     
     //MARK: - Singleton
-    open static let shared = CQZCameraManager()
+    public static let shared = CQZCameraManager()
     
     //MARK: - opens properties
-    open var hasCamera:Bool {
+    public var hasCamera:Bool {
         return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
     }
     
-    open var allowsEditing:Bool {
+    public var allowsEditing:Bool {
         get {
             return imagePickerController.allowsEditing
         }
@@ -44,7 +44,7 @@ open class CQZCameraManager:NSObject {
     
     
     //MARK: - open methods
-    open func showCameraFrontal(onViewController viewController:UIViewController, completion: @escaping (_ image:UIImage?) -> ()) {
+    public func showCameraFrontal(onViewController viewController:UIViewController, completion: @escaping (_ image:UIImage?) -> ()) {
         imagePickerController.allowsEditing = true
         didFinishPickingImage = completion
         imagePickerController.sourceType = UIImagePickerControllerSourceType.camera
@@ -53,7 +53,7 @@ open class CQZCameraManager:NSObject {
         viewController.present(imagePickerController, animated: true, completion: nil)
     }
     
-    open func showActionSheetSelectImage(inViewController viewController:UIViewController
+    public func showActionSheetSelectImage(inViewController viewController:UIViewController
         , allowsEditing:Bool
         , showCameraFrontal:Bool
         , titleAlert:String?
