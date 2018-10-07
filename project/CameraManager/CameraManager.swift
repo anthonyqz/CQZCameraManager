@@ -16,7 +16,7 @@ public class CQZCameraManager:NSObject {
     
     //MARK: - opens properties
     public var hasCamera:Bool {
-        return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
+        return UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera)
     }
     
     public var allowsEditing:Bool {
@@ -47,7 +47,7 @@ public class CQZCameraManager:NSObject {
     public func showCameraFrontal(onViewController viewController:UIViewController, completion: @escaping (_ image:UIImage?) -> ()) {
         imagePickerController.allowsEditing = true
         didFinishPickingImage = completion
-        imagePickerController.sourceType = UIImagePickerControllerSourceType.camera
+        imagePickerController.sourceType = UIImagePickerController.SourceType.camera
         imagePickerController.showsCameraControls = true
         imagePickerController.cameraDevice = .front
         viewController.present(imagePickerController, animated: true, completion: nil)
@@ -68,17 +68,17 @@ public class CQZCameraManager:NSObject {
         }
         didFinishPickingImage = completion
         
-        let alert = UIAlertController(title: titleAlert, message: nil, preferredStyle:UIAlertControllerStyle.actionSheet)
+        let alert = UIAlertController(title: titleAlert, message: nil, preferredStyle:UIAlertController.Style.actionSheet)
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
-            let actionCamera = UIAlertAction(title: titleSourceCamera, style: UIAlertActionStyle.default, handler: { [unowned self] (action) -> Void in
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+            let actionCamera = UIAlertAction(title: titleSourceCamera, style: UIAlertAction.Style.default, handler: { [unowned self] (action) -> Void in
                 self.takePhoto(inViewController: viewController)
                 })
             alert.addAction(actionCamera)
         }
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
-            let actionGaleria = UIAlertAction(title: titleSourceLibrary, style: UIAlertActionStyle.default, handler: { [unowned self] (action) -> Void in
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
+            let actionGaleria = UIAlertAction(title: titleSourceLibrary, style: UIAlertAction.Style.default, handler: { [unowned self] (action) -> Void in
                 self.selectPhoto(inViewController: viewController)
                 })
             alert.addAction(actionGaleria)
@@ -90,7 +90,7 @@ public class CQZCameraManager:NSObject {
             }
         }
         
-        let actionCancel = UIAlertAction(title: "Cancelar", style: UIAlertActionStyle.destructive) { (action) -> Void in
+        let actionCancel = UIAlertAction(title: "Cancelar", style: UIAlertAction.Style.destructive) { (action) -> Void in
         }
         alert.addAction(actionCancel)
         
@@ -99,13 +99,13 @@ public class CQZCameraManager:NSObject {
     
     //MARK: - private methods
     private func takePhoto(inViewController viewController:UIViewController) {
-        imagePickerController.sourceType = UIImagePickerControllerSourceType.camera
+        imagePickerController.sourceType = UIImagePickerController.SourceType.camera
         imagePickerController.showsCameraControls = true
         viewController.present(imagePickerController, animated: true, completion: nil)
     }
     
     private func selectPhoto(inViewController viewController:UIViewController) {
-        imagePickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        imagePickerController.sourceType = UIImagePickerController.SourceType.photoLibrary
         viewController.present(imagePickerController, animated: true, completion: nil)
     }
     
@@ -120,11 +120,11 @@ public class CQZCameraManager:NSObject {
 
 extension CQZCameraManager:UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             executeDidFinishPickingImage(image: image)
         }else{
-            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
                 executeDidFinishPickingImage(image: image)
             }
         }
