@@ -31,7 +31,9 @@ public class CQZCameraManager:NSObject {
     //MARK: - privates properties
     private let imagePickerController = UIImagePickerController()
     
-    private var didFinishPickingImage:((_ image:UIImage?) -> ())?
+    private var didFinishPickingImage:((_ image:UIImage?, _ isFromGallerySelector: Bool) -> ())?
+
+    private var isFromGallerySelector = false
     
     //MARK: - override methods
     private override init(){
@@ -44,7 +46,7 @@ public class CQZCameraManager:NSObject {
     
     
     //MARK: - open methods
-    public func showCameraFrontal(onViewController viewController:UIViewController, completion: @escaping (_ image:UIImage?) -> ()) {
+    public func showCameraFrontal(onViewController viewController:UIViewController, completion: @escaping (_ image:UIImage?, _ isFromGallerySelector: Bool) -> ()) {
         imagePickerController.allowsEditing = true
         didFinishPickingImage = completion
         imagePickerController.sourceType = UIImagePickerController.SourceType.camera
@@ -59,7 +61,7 @@ public class CQZCameraManager:NSObject {
         , titleAlert:String?
         , titleSourceCamera:String?
         , titleSourceLibrary:String?
-        , completion: @escaping (_ image:UIImage?) -> ()
+        , completion: @escaping (_ image:UIImage?, _ isFromGallerySelector: Bool) -> ()
         , moreActions actions:[UIAlertAction]?) {
         
         imagePickerController.allowsEditing = allowsEditing
@@ -99,12 +101,14 @@ public class CQZCameraManager:NSObject {
     
     //MARK: - private methods
     private func takePhoto(inViewController viewController:UIViewController) {
+        isFromGallerySelector = false
         imagePickerController.sourceType = UIImagePickerController.SourceType.camera
         imagePickerController.showsCameraControls = true
         viewController.present(imagePickerController, animated: true, completion: nil)
     }
     
     private func selectPhoto(inViewController viewController:UIViewController) {
+        isFromGallerySelector = true
         imagePickerController.sourceType = UIImagePickerController.SourceType.photoLibrary
         viewController.present(imagePickerController, animated: true, completion: nil)
     }
@@ -112,7 +116,7 @@ public class CQZCameraManager:NSObject {
     fileprivate func executeDidFinishPickingImage(image:UIImage?) {
         imagePickerController.dismiss(animated: true, completion: nil)
         if let didFinishPickingImage = didFinishPickingImage {
-            didFinishPickingImage(image)
+            didFinishPickingImage(image, isFromGallerySelector)
         }
         didFinishPickingImage = nil
     }

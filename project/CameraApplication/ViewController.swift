@@ -23,9 +23,10 @@ class ViewController: UIViewController {
             , titleAlert: nil
             , titleSourceCamera: "Take Picture"
             , titleSourceLibrary: "Select Picture"
-            , completion: { (image) -> () in
+            , completion: { (image, isFromGallerySelector) -> () in
                 if let _ = image {
                     print("get image")
+                    print("isFromGallerySelector: \(isFromGallerySelector)")
                 }else{
                     print("cancel")
                 }
