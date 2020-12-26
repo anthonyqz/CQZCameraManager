@@ -11,6 +11,8 @@ import CQZCameraManager
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var imageView: UIImageView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -23,8 +25,9 @@ class ViewController: UIViewController {
             , titleAlert: nil
             , titleSourceCamera: "Take Picture"
             , titleSourceLibrary: "Select Picture"
-            , completion: { (image, isFromGallerySelector) -> () in
-                if let _ = image {
+            , completion: { [weak self] (image, isFromGallerySelector) -> () in
+                if let image = image {
+                    self?.imageView.image = image
                     print("get image")
                     print("isFromGallerySelector: \(isFromGallerySelector)")
                 }else{
